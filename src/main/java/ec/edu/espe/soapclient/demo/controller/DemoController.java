@@ -53,7 +53,7 @@ public class DemoController {
     @PostMapping("/locations/buy/{id}/")
     public ResponseEntity buyLocation(@PathVariable int id){
         try{
-            GetLocalitiesResponse response = demoService.getLocalities(id);
+            GetLocalitiesResponse response = demoService.buyLocation(id);
             return ResponseEntity.ok(response.getLocation());
         }catch (Exception ex){
             return ResponseEntity.badRequest().body(ex.getMessage());
