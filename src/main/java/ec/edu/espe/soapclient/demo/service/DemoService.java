@@ -5,8 +5,7 @@ import ec.edu.espe.soapclient.demo.dto.EchoResponseSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import soapserver.wsdl.GetEchoRequest;
-import soapserver.wsdl.GetEchoResponse;
+import soapserver.wsdl.*;
 
 @Service
 @Slf4j
@@ -24,5 +23,26 @@ public class DemoService extends WebServiceGatewaySupport {
                 .message(soapResponse.getMessage()).build();
 
         return restResponse;
+    }
+
+
+    public GetAvailableMatchResponse getAvailableMatches(){
+        GetAvailableMatchRequest soapRequest = new GetAvailableMatchRequest();
+        GetAvailableMatchResponse soapResponse = (GetAvailableMatchResponse) getWebServiceTemplate().marshalSendAndReceive(soapServiceEndpoint, soapRequest);
+        return soapResponse;
+    }
+
+    public GetLocalitiesResponse getLocalities(int id){
+        GetLocalitiesRequest soapRequest = new GetLocalitiesRequest();
+        soapRequest.setMatchId(id);
+        GetLocalitiesResponse soapResponse = (GetLocalitiesResponse) getWebServiceTemplate().marshalSendAndReceive(soapServiceEndpoint, soapRequest);
+        return soapResponse;
+    }
+
+    public GetLocalitiesResponse buyLocation(int id){
+        BuyLocationRequest soapRequest = new BuyLocationRequest();
+        soapRequest.setLocationId(id);
+        GetLocalitiesResponse soapResponse = (GetLocalitiesResponse) getWebServiceTemplate().marshalSendAndReceive(soapServiceEndpoint, soapRequest);
+        return soapResponse;
     }
 }
